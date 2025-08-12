@@ -1,139 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Modern Scroll Page</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
-      scroll-behavior: smooth;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      height: 100%;
-      background: #f8f9fa;
-    }
-
-    header {
-      position: fixed;
-      width: 100%;
-      top: 0;
-      background: rgba(255, 255, 255, 0.95);
-      display: flex;
-      justify-content: center;
-      gap: 50px;
-      padding: 20px 0;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      z-index: 1000;
-    }
-
-    header a {
-      text-decoration: none;
-      color: #333;
-      font-weight: 500;
-      padding: 8px 16px;
-      border-radius: 4px;
-      transition: background 0.3s;
-    }
-
-    header a:hover {
-      background: #e9ecef;
-    }
-
-    section {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 1s ease, transform 1s ease;
-    }
-
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .section-1 { background: #ffffff; }
-    .section-2 { background: #f1f3f5; }
-    .section-3 { background: #dee2e6; }
-
-    .content {
-      text-align: center;
-      max-width: 600px;
-      padding: 20px;
-    }
-
-    .content h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
-    }
-
-    .content p {
-      font-size: 1.2rem;
-      color: #555;
-    }
-
-    /* Offset to handle fixed header */
-    section::before {
-      content: "";
-      display: block;
-      height: 80px;
-      margin-top: -80px;
-      visibility: hidden;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <a href="#section1">Home</a>
-    <a href="#section2">About</a>
-    <a href="#section3">Contact</a>
-  </header>
-
-  <section id="section1" class="section-1">
-    <div class="content">
-      <h1>Welcome</h1>
-      <p>This is the home section with a modern look and clean layout.</p>
-    </div>
-  </section>
-
-  <section id="section2" class="section-2">
-    <div class="content">
-      <h1>About</h1>
-      <p>Here you can talk about your mission, goals, or background.</p>
-    </div>
-  </section>
-
-  <section id="section3" class="section-3">
-    <div class="content">
-      <h1>Contact</h1>
-      <p>Provide ways for visitors to reach you — email, social links, etc.</p>
-    </div>
-  </section>
-
-  <script>
-    // Fade-in on scroll
-    const sections = document.querySelectorAll('section');
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Static Page</title>
+    <!-- Tailwind CSS CDN for modern, utility-first styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for the full-screen sections and transitions */
+        .full-screen-section {
+            min-height: 100vh;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            scroll-snap-align: start; /* Helps sections snap to the viewport */
         }
-      });
-    }, {
-      threshold: 0.2
-    });
 
-    sections.forEach(section => {
-      observer.observe(section);
-    });
-  </script>
+        .full-screen-section.active {
+            opacity: 1;
+        }
+
+        /* Prevent scroll-snap-type from affecting header */
+        .no-snap {
+            scroll-snap-type: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+    <!-- Header section with a 3-section navigation -->
+    <header class="fixed top-0 left-0 w-full z-50 bg-white bg-opacity-80 backdrop-blur-sm shadow-md py-4">
+        <nav class="container mx-auto flex justify-center space-x-8">
+            <a href="#home" class="text-lg font-semibold text-gray-700 hover:text-blue-500 transition-colors duration-300">Home</a>
+            <a href="#about" class="text-lg font-semibold text-gray-700 hover:text-blue-500 transition-colors duration-300">About</a>
+            <a href="#contact" class="text-lg font-semibold text-gray-700 hover:text-blue-500 transition-colors duration-300">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Main content container with scroll-snap-type for smooth scrolling between sections -->
+    <main class="scroll-snap-y scroll-mandatory">
+        
+        <!-- Section 1: Home -->
+        <section id="home" class="full-screen-section active flex flex-col items-center justify-center text-center p-8 bg-gray-100">
+            <div class="space-y-4">
+                <h1 class="text-6xl font-extrabold text-gray-900">Welcome</h1>
+                <p class="text-xl max-w-2xl text-gray-600">
+                    This is the first full-screen section. The scroll-snap effect makes it easy to navigate between sections.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 2: About -->
+        <section id="about" class="full-screen-section flex flex-col items-center justify-center text-center p-8 bg-white">
+            <div class="space-y-4">
+                <h2 class="text-6xl font-extrabold text-gray-900">About Us</h2>
+                <p class="text-xl max-w-2xl text-gray-600">
+                    Discover more about our mission and what we do. Each section is designed to be a unique experience.
+                </p>
+            </div>
+        </section>
+
+        <!-- Section 3: Contact -->
+        <section id="contact" class="full-screen-section flex flex-col items-center justify-center text-center p-8 bg-gray-100">
+            <div class="space-y-4">
+                <h2 class="text-6xl font-extrabold text-gray-900">Get In Touch</h2>
+                <p class="text-xl max-w-2xl text-gray-600">
+                    We'd love to hear from you. Find our contact information and social links here.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript for the fade-in/fade-out effect using the Intersection Observer API -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.full-screen-section');
+            
+            // Set up the Intersection Observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add 'active' class to the section that is in view
+                        entry.target.classList.add('active');
+                    } else {
+                        // Remove 'active' class from sections that are not in view
+                        entry.target.classList.remove('active');
+                    }
+                });
+            }, {
+                threshold: 0.5 // Trigger when 50% of the section is visible
+            });
+
+            // Start observing each section
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
 </body>
 </html>
